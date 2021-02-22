@@ -193,7 +193,7 @@ class Tags extends React.Component {
             {...props}
             value={tags.tag}
             onChangeText={text => this.onChangeText(text, tags, updateState, keysForTag, keysForTagsArray)}
-            onEndEditing={() => this.onEndEditing(tags, updateState)}
+           // onEndEditing={() => this.onEndEditing(tags, updateState)}
         />
         {rightElement ? this.renderRightElement(rightElement, rightElementContainerStyle) : null}
       </View>
