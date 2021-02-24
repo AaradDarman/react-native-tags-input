@@ -93,7 +93,8 @@ class Tags extends React.Component {
         tagsArray: [...new Set(tempArray)] // Deduplication
       };
       updateState(tempObject);
-      return this.input.clear();
+      return;
+      // return this.input.clear();
     }
     let tempObject = {
       tag: text,
@@ -176,11 +177,13 @@ class Tags extends React.Component {
     return (
       <View style={StyleSheet.flatten([styles.container, containerStyle])}>
       {label ? this.renderLabel(label, StyleSheet.flatten([styles.labelStyle, labelStyle])) : null}
+      {customElement ? customElement : null}
         <View style={StyleSheet.flatten(StyleSheet.flatten([styles.inputContainer, inputContainerStyle]))}>
           {leftElement ? this.renderLeftElement(leftElement, leftElementContainerStyle) : null}
           <TextInput
             underlineColorAndroid="transparent"
             editable={!disabled}
+            blurOnSubmit={false}
             ref={ref => {
               this.input = ref;
             }}
@@ -193,11 +196,11 @@ class Tags extends React.Component {
             {...props}
             value={tags.tag}
             onChangeText={text => this.onChangeText(text, tags, updateState, keysForTag, keysForTagsArray)}
-           // onEndEditing={() => this.onEndEditing(tags, updateState)}
+           onSubmitEditing={() => this.onEndEditing(tags, updateState)}
         />
         {rightElement ? this.renderRightElement(rightElement, rightElementContainerStyle) : null}
       </View>
-        {customElement ? customElement : null}
+      
       <View style={StyleSheet.flatten([styles.tagsView, tagsViewStyle])}>
         {tags.tagsArray.map((item, count) => {
             return (
@@ -247,6 +250,8 @@ const styles = {
   container: {
     width: '100%',
     paddingHorizontal: 10,
+    flexDirection:'column-reverse',
+    overflow:'hidden',
   },
   disabledInput: {
     opacity: 0.5,
